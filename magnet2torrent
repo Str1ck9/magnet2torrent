@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Convert a torrent magnet link to a torrent file
+# Usage: ./magnet2torrent.sh <magnet_link>
+# Example: ./magnet2torrent.sh "magnet:?xt=urn:btih:34567890abcdef1234567890abcdef1234567890"
+# Check if a magnet link was provided
+
+if [ $# -eq 0 ]; then
+  echo "Usage: ./magnet2torrent.sh <magnet_link>"
+  exit 1
+fi
+
+# Extract the infohash from the magnet link
+
+magnet_link=$1
+infohash=${magnet_link##xt=}
+
+# Create a torrent file
+
+torrent_file="meta-$infohash.torrent"
+echo "d10:magnet-uri${#magnet_link}:${magnet_link}e" > "$torrent_file"
+
+# Exit the script
+
+exit 0
